@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="./font/fontawesome-free-5.15.4-web/css/all.min.css">
+        
+    </head>
+    <body>
+
+        <div class="main">
+            <div class="slider">
+                <div class="prev-btn">
+                    <i class="fas fa-arrow-left btn-icon"></i>
+                </div>
+
+                <ul class="slider__list">
+                    <li data-set="0%" class="slider__item slider__item--first">
+                        <img src="./img/banner1.jpg" alt="Img 1" class="slider__img">
+                    </li>
+                    <li data-set="-33.33333%" class="slider__item">
+                        <img src="./img/banner2.jpg" alt="Img 2" class="slider__img">
+                    </li>
+                    <li data-set="-66.66667%" class="slider__item">
+                        <img src="./img/banner3.jpg" alt="Img 3" class="slider__img">
+                    </li>
+                </ul>
+
+                <div class="next-btn">
+                    <i class="fas fa-arrow-right btn-icon"></i>
+                </div>
+                
+                <ul class="pagination">
+                    <li class="pagination__item active"></li>
+                    <li class="pagination__item"></li>
+                    <li class="pagination__item"></li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            const slider = (() => {
+                const sliderItems = document.querySelectorAll('.slider__item');
+                const firstSliderItem = document.querySelector('.slider__item--first');
+                const prevBtn = document.querySelector('.prev-btn');
+                const nextBtn = document.querySelector('.next-btn');
+                const paginationBtns = document.querySelectorAll('.pagination__item');
+                let currentItem = 0;
+                let setTimeChangeImg;
+
+                return {
+                    handleEvent() {
+                        const _this = this;
+
+                        prevBtn.onclick = () => {
+                            this.prevImg();
+                            this.autoChangeImg(true);
+                        }
+
+                        nextBtn.onclick = () => {
+                            this.nextImg();
+                            this.autoChangeImg(true);
+                        }
+
+                        paginationBtns.forEach((btn, index) => {
+                            btn.onclick = function() {
+                                currentItem = index;
+                                _this.activePagBtnAndChangeImg();
+                                _this.autoChangeImg(true);
+                            }
+                        });
+                    },
+                    activePagBtnAndChangeImg() {
+                        document.querySelector('.pagination__item.active').classList.remove('active');
+                        paginationBtns[currentItem].classList.add('active');
+                        firstSliderItem.style.marginLeft = sliderItems[currentItem].dataset.set;
+                    },
+                    prevImg() {
+                        currentItem = currentItem - 1 < 0 ? sliderItems.length - 1 : --currentItem;
+                        this.activePagBtnAndChangeImg();
+                    },
+                    nextImg() {
+                        currentItem = currentItem + 1 >= sliderItems.length ? 0 : ++currentItem;
+                        this.activePagBtnAndChangeImg();
+                    },
+                    autoChangeImg(isClick) {
+                        const _this = this;
+
+                        if (isClick) {
+                            clearInterval(setTimeChangeImg);
+                        } 
+
+                        setTimeChangeImg = setInterval(function() {
+                                _this.nextImg();
+                        }, 3000);
+                    },
+                    init() {
+                        this.handleEvent();
+
+                        this.autoChangeImg();
+                    }
+                };
+            })();
+
+            slider.init();
+        </script>
+        
+    </body>
+</html>

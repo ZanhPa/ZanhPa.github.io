@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 300%;
+}
+
+/* Tùy theo số lượng ảnh trong slider mà bạn chia phù hợp */
+.slider__item {
+    width: calc(100% / 3);
+    transition: all linear 0.6s;
+}
+
+.slider__img {
+    width: 100%;
+}
+
+.slider__item--first {
+    margin-left: 0;
+}
+
+.prev-btn,
+.next-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cf8f05;
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0.85;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    opacity: 1;
+}
+
+.next-btn {
+    right: 0;
+}
+
+.btn-icon {
+    font-size: 30px;
+    color: white;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.pagination__item {
+    margin: 0 10px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cf8f05;
+    border-radius: 50%;
+    background: white;
+}
+
+.pagination__item.active {
+    border-color: white;
+    background-color: #cf8f05;
+}
